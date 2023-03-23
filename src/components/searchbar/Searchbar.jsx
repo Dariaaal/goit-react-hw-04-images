@@ -1,30 +1,29 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import css from './Searchbar.module.css';
 import {ReactComponent as AddIcon} from '../icon-search.svg'
 
-export default class Searchbar extends Component {
-  state = {
-    value: '',
-  }
+export default function Searchbar ({handleSearch}) {
 
-  handleChange = e => {
-    this.setState({value: e.target.value.toLowerCase()});
-  }
+const [value, setValue] = useState('');
 
-  handleSubmit = e => {
-    e.preventDefault()
-    this.props.handleSearch(this.state.value)
-    this.reset();
-  }
-
-  reset = () => {
-    this.setState({value: ''})
+const handleChange = e => {
+  setValue(e.target.value.toLowerCase());
 }
 
-    render() {
+const handleSubmit = e => {
+  e.preventDefault();
+  handleSearch(value);
+  reset();
+}
+
+const reset = () => {
+  setValue('');
+}
+
+    {
       return (
         <header className={css.searchbar}>
-        <form className={css.searchform} onSubmit={this.handleSubmit}>
+        <form className={css.searchform} onSubmit={handleSubmit}>
           <button type="submit" className={css.button}>
             <span className={css.label}><AddIcon width="30" height="30" fill='#3f51b5'/></span>
           </button>
@@ -35,8 +34,8 @@ export default class Searchbar extends Component {
             autoComplete="off"
             autoFocus
             placeholder="Search images and photos"
-            onChange={this.handleChange}
-            value={this.state.value}
+            onChange={handleChange}
+            value={value}
           />
         </form>
       </header>
