@@ -24,7 +24,7 @@ export default function App () {
       setIsLoading(true);
       const data = await getImages(searchText, page)
       console.log(data)
-      setItems([...items, ...data.hits]);
+      setItems(prevItems => [...prevItems, ...data.hits]);
     }
       catch (error) {
         setError(true);
