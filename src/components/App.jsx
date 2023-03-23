@@ -52,9 +52,8 @@ Api();
     setPage(state => state + 1);
   }
 
-  {
       return (
-    <div
+      <div
       style={{
         height: '100vh',
         fontSize: 40,
@@ -67,8 +66,7 @@ Api();
     {isLoading && <Loader/> }
     {(items.length >=12 && items.length < totalhits  && !isLoading) && <Button onClick={onLoadMore}/>}
     </div>
-  );
-  }
+    )
 }
 
 
