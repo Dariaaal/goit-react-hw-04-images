@@ -1,0 +1,20 @@
+.loadbutton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.loadmore{
+    background-color: #3f51b5;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    font-size: 20px;
+}
+
+.loadmore:hover{
+    background-color: #354188;
+}
