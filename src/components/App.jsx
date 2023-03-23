@@ -35,7 +35,9 @@ export default function App () {
       setIsLoading(false);
     }
 }
+
 Api();
+
 }, [searchText, page])
 
   const handleSearch = (searchText) => {
