@@ -1,54 +1,56 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import Searchbar from "./searchbar/Searchbar";
 import {ImageGallery} from "./imageGallery/ImageGallery";
 import getImages from './api';
 import {Loader} from './loader/Loader';
 import {Button} from './button/Button';
 
-export default class App extends Component {
+export default function App () {
 
-  state = {
-    searchText: '',
-    items: [],
-    isLoading: false,
-    error: false,
-    page: 1,
-    totalhits: 500
-  }
+  const [searchText, setSearchText] = useState('');
+  const [items, setItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [page, setPage] = useState(1);
+  const [totalhits] = useState(500);
 
-  async componentDidUpdate(_, prevState) {
-      if (prevState.searchText !== this.state.searchText ||
-        this.state.page !== prevState.page) {
-    try {
-      this.setState({isLoading: true});
-      const data = await getImages(this.state.searchText, this.state.page)
+  useEffect(() => {
+    if(!searchText){
+      return;
+    }
+    setIsLoading(true);
+    async function Api (){
+      try {
+      setIsLoading(true);
+      const data = await getImages(searchText, page)
       console.log(data)
-      this.setState(state => ({
-        items: [...state.items, ...data.hits], 
-      }));
+      setItems([...items, ...data.hits]);
     }
       catch (error) {
-        this.setState({error: true, isLoading: false});
+        setError(true);
+        setIsLoading(false);
         console.log(error);
     }
     finally {
-      this.setState({isLoading: false})
+      setIsLoading(false);
     }
-  }
+}
+Api();
+}, [searchText, page])
+
+  const handleSearch = (searchText) => {
+    setSearchText(searchText);
+    setItems([]);
+    setIsLoading(false);
+    setError(false);
+    setPage(1);
   }
 
-  handleSearch = (searchText) => {
-    this.setState({searchText, items: [], isLoading: false, error: false, page: 1});
+  const  onLoadMore = () => {
+    setPage(state => state + 1);
   }
 
-  onLoadMore = () => {
-    this.setState((prevState)=>({
-      page: prevState.page + 1
-    }))  
-  }
- 
-  render() {
-    const {items, isLoading, error, totalhits} = this.state;
+  {
       return (
     <div
       style={{
@@ -57,11 +59,11 @@ export default class App extends Component {
         color: '#010101'
       }}
     >
-    <Searchbar handleSearch={this.handleSearch}/>
+    <Searchbar handleSearch={handleSearch}/>
     {error && (<p>Nothing was found</p>)}
     {items && <ImageGallery items={items}/>}
     {isLoading && <Loader/> }
-    {(items.length >=12 && items.length < totalhits  && !isLoading) && <Button onClick={this.onLoadMore}/>}
+    {(items.length >=12 && items.length < totalhits  && !isLoading) && <Button onClick={onLoadMore}/>}
     </div>
   );
   }
