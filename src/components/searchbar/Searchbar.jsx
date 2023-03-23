@@ -20,7 +20,6 @@ const reset = () => {
   setValue('');
 }
 
-    {
       return (
         <header className={css.searchbar}>
         <form className={css.searchform} onSubmit={handleSubmit}>
@@ -40,6 +39,5 @@ const reset = () => {
         </form>
       </header>
       )
-    }
   }
   

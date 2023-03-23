@@ -15,12 +15,10 @@ export default function ImageGalleryItem ({id, webformatURL, largeImageURL, tags
     setShowModal(false);
   }
 
-  {
     return <li key={id} className={css.ImageGalleryItem}>
       <img src={webformatURL} alt={tags} className={css.image} onClick={openModal}/>
       {showModal && <Modal onClose={closeModal}><img src={largeImageURL} alt={tags} /></Modal>}
     </li>
-    }
   }
 
   ImageGalleryItem.propTypes = {

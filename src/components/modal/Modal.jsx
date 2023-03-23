@@ -23,11 +23,9 @@ export default function Modal ({onClose, children}) {
     }
   }
 
-  {
     return <div className={css.overlay} onClick={handleBackdropClick}>
     <div className={css.modal}>
       {children}
     </div>
     </div>
-  }
   }
