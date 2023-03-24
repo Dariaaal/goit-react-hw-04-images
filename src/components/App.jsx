@@ -64,7 +64,7 @@ Api();
     {error && (<p>Nothing was found</p>)}
     {items && <ImageGallery items={items}/>}
     {isLoading && <Loader/> }
-    {(items.length >=12 && items.length < totalhits  && !isLoading) && <Button onClick={onLoadMore}/>}
+    {(items.length !==0 && items.length < totalhits  && !isLoading) && <Button onClick={onLoadMore}/>}
     </div>
     )
 }
