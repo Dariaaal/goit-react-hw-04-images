@@ -12,7 +12,7 @@ export default function App () {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [page, setPage] = useState(1);
-  const [totalhits] = useState(500);
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
     if(!searchText){
@@ -25,6 +25,7 @@ export default function App () {
       const data = await getImages(searchText, page)
       console.log(data)
       setItems(prevItems => [...prevItems, ...data.hits]);
+      setTotal(data.totalHits);
     }
       catch (error) {
         setError(true);
@@ -64,7 +65,7 @@ Api();
     {error && (<p>Nothing was found</p>)}
     {items && <ImageGallery items={items}/>}
     {isLoading && <Loader/> }
-    {(items.length !==0 && items.length < totalhits  && !isLoading) && <Button onClick={onLoadMore}/>}
+    {(items.length !==0 && items.length < total  && !isLoading) && <Button onClick={onLoadMore}/>}
     </div>
     )
 }
